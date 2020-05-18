@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2019, The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/form"
+        app:startDestination="@id/home">
+
+    <fragment
+            android:id="@+id/home"
+            android:name="cat.xarxacatala.xarxacatalapp.ui.ShowsFragment"
+            android:label="fragment_shows"
+            tools:layout="@layout/fragment_shows">
+        <action
+                android:id="@+id/action_home_to_showDetailFragment"
+                app:destination="@id/showDetailFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/downloads"
+            android:name="cat.xarxacatala.xarxacatalapp.ui.DownloadsFragment"
+            android:label="fragment_downloads"
+            tools:layout="@layout/fragment_downloads">
+        <action
+                android:id="@+id/action_downloads_to_videoPlayerFragment2"
+                app:destination="@id/videoPlayerFragment2" />
+        <action
+                android:id="@+id/action_downloads_to_showDetailFragment"
+                app:destination="@id/showDetailFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/videoPlayerFragment2"
+            android:name="cat.xarxacatala.xarxacatalapp.ui.VideoPlayerFragment"
+            android:label="fragment_video_player"
+            tools:layout="@layout/fragment_video_player" />
+    <fragment
+            android:id="@+id/watching"
+            android:name="cat.xarxacatala.xarxacatalapp.ui.WatchingFragment"
+            android:label="fragment_watching"
+            tools:layout="@layout/fragment_watching">
+        <action
+                android:id="@+id/action_watching_to_videoPlayerFragment2"
+                app:destination="@id/videoPlayerFragment2" />
+        <action
+                android:id="@+id/action_watching_to_showDetailFragment"
+                app:destination="@id/showDetailFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/showDetailFragment"
+            android:name="cat.xarxacatala.xarxacatalapp.ui.ShowDetailFragment"
+            android:label="fragment_show_detail"
+            tools:layout="@layout/fragment_show_detail">
+        <action
+                android:id="@+id/action_showDetailFragment_to_videoPlayerFragment2"
+                app:destination="@id/videoPlayerFragment2" />
+    </fragment>
+</navigation>
