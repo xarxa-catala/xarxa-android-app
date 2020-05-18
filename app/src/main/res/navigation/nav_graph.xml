@@ -22,7 +22,7 @@
 
     <fragment
             android:id="@+id/home"
-            android:name="cat.xarxacatala.xarxacatalapp.ui.ShowsFragment"
+            android:name="cat.xarxacatala.xarxacatalapp.shows.ShowsFragment"
             android:label="fragment_shows"
             tools:layout="@layout/fragment_shows">
         <action
