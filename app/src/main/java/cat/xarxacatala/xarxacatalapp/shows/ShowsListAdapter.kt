@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,10 @@ class ShowsListAdapter : ListAdapter<Show, ShowsListAdapter.ShowViewHolder>(
     inner class ShowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(show: Show) {
             itemView.findViewById<TextView>(R.id.tvShowTitle).text = show.name
+            itemView.setOnClickListener {
+                val action = ShowsFragmentDirections.actionHomeToShowDetailFragment(show.id)
+                it.findNavController().navigate(action)
+            }
         }
     }
 

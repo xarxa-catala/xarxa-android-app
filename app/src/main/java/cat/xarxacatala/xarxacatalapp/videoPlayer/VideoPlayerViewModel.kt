@@ -1,4 +1,4 @@
-package cat.xarxacatala.xarxacatalapp.ui
+package cat.xarxacatala.xarxacatalapp.videoPlayer
 
 import androidx.lifecycle.ViewModel
 

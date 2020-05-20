@@ -2,6 +2,7 @@ package cat.xarxacatalapp.core.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import cat.xarxacatalapp.core.db.dao.EpisodeDao
 import cat.xarxacatalapp.core.db.dao.SeasonDao
 import cat.xarxacatalapp.core.db.dao.ShowDao
 import cat.xarxacatalapp.core.models.Episode
@@ -21,4 +22,6 @@ abstract class XarxaCatDb : RoomDatabase() {
     abstract fun showDao(): ShowDao
 
     abstract fun seasonDao(): SeasonDao
+
+    abstract fun episodeDao(): EpisodeDao
 }

@@ -9,12 +9,10 @@ data class Episode(
     @PrimaryKey
     @SerializedName("id")
     val id: Int,
-    @SerializedName("name")
+    @SerializedName("nom")
     val name: String,
-    @SerializedName("number")
-    val number: Int,
-    @SerializedName("season_id")
-    val seasonId: Int,
+//    @SerializedName("season_id")
+//    val seasonId: Int,
 //    //FIXME: This shouldn't be ignored
 //    @SerializedName("prequels")
 //    @Ignore

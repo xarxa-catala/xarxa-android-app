@@ -23,7 +23,7 @@
     <fragment
             android:id="@+id/home"
             android:name="cat.xarxacatala.xarxacatalapp.shows.ShowsFragment"
-            android:label="fragment_shows"
+            android:label="@string/title_home"
             tools:layout="@layout/fragment_shows">
         <action
                 android:id="@+id/action_home_to_showDetailFragment"
@@ -32,39 +32,47 @@
     <fragment
             android:id="@+id/downloads"
             android:name="cat.xarxacatala.xarxacatalapp.ui.DownloadsFragment"
-            android:label="fragment_downloads"
+            android:label="@string/title_downloads"
             tools:layout="@layout/fragment_downloads">
         <action
-                android:id="@+id/action_downloads_to_videoPlayerFragment2"
-                app:destination="@id/videoPlayerFragment2" />
+                android:id="@+id/action_downloads_to_videoPlayerFragment"
+                app:destination="@id/videoPlayerFragment" />
         <action
                 android:id="@+id/action_downloads_to_showDetailFragment"
                 app:destination="@id/showDetailFragment" />
     </fragment>
     <fragment
-            android:id="@+id/videoPlayerFragment2"
-            android:name="cat.xarxacatala.xarxacatalapp.ui.VideoPlayerFragment"
+            android:id="@+id/videoPlayerFragment"
+            android:name="cat.xarxacatala.xarxacatalapp.videoPlayer.VideoPlayerFragment"
             android:label="fragment_video_player"
-            tools:layout="@layout/fragment_video_player" />
+            tools:layout="@layout/fragment_video_player">
+        <argument
+                android:name="episodeId"
+                app:argType="integer" />
+    </fragment>
     <fragment
             android:id="@+id/watching"
             android:name="cat.xarxacatala.xarxacatalapp.ui.WatchingFragment"
-            android:label="fragment_watching"
+            android:label="@string/title_watching"
             tools:layout="@layout/fragment_watching">
         <action
-                android:id="@+id/action_watching_to_videoPlayerFragment2"
-                app:destination="@id/videoPlayerFragment2" />
+                android:id="@+id/action_watching_to_videoPlayerFragment"
+                app:destination="@id/videoPlayerFragment" />
         <action
                 android:id="@+id/action_watching_to_showDetailFragment"
                 app:destination="@id/showDetailFragment" />
     </fragment>
     <fragment
             android:id="@+id/showDetailFragment"
-            android:name="cat.xarxacatala.xarxacatalapp.ui.ShowDetailFragment"
+            android:name="cat.xarxacatala.xarxacatalapp.showDetail.ShowDetailFragment"
             android:label="fragment_show_detail"
             tools:layout="@layout/fragment_show_detail">
+        <argument
+                android:name="showId"
+                android:defaultValue="0"
+                app:argType="integer" />
         <action
-                android:id="@+id/action_showDetailFragment_to_videoPlayerFragment2"
-                app:destination="@id/videoPlayerFragment2" />
+                android:id="@+id/action_showDetailFragment_to_videoPlayerFragment"
+                app:destination="@id/videoPlayerFragment" />
     </fragment>
 </navigation>

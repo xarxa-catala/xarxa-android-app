@@ -1,18 +1,32 @@
-package cat.xarxacatala.xarxacatalapp.ui
+package cat.xarxacatala.xarxacatalapp.showDetail
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
-import cat.xarxacatala.xarxacatalapp.R
+import cat.xarxacatalapp.core.repository.EpisodesRepository
+import cat.xarxacatalapp.core.repository.SeasonsRepository
+import cat.xarxacatalapp.core.repository.ShowsRepository
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  */
-class ShowDetailViewModel : ViewModel() {
+class ShowDetailViewModel @Inject constructor(
+    showsRepository: ShowsRepository,
+    seasonRepository: SeasonsRepository,
+    episodesRepository: EpisodesRepository
+) : ViewModel() {
+    var showId = 0
+    var seasonId = 0
 
+    val show by lazy {
+        showsRepository.show(showId)
+    }
 
+    val seasons by lazy {
+        seasonRepository.seasons(showId)
+    }
 
+    val episodes by lazy {
+        episodesRepository.episodes(showId, seasonId)
+    }
 }

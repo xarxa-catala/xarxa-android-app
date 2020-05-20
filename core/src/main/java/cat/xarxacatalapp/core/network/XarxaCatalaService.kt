@@ -7,12 +7,15 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 
+const val URL_BASE = "api/v1"
+const val URL_PARAMS = "?format=json"
+
 interface XarxaCatalaService {
 
-    @GET("api/v1/shows?format=json")
+    @GET("$URL_BASE/shows/$URL_PARAMS")
     suspend fun shows(): Response<List<Show>>
 
-    @GET("/shows/{showId}/seasons/")
+    @GET("$URL_BASE/shows/{showId}/seasons/")
     suspend fun getSeasons(@Path("showId") showId: Int): Response<List<Season>>
 
     @GET("/shows/{showId}/films/")
@@ -21,7 +24,7 @@ interface XarxaCatalaService {
     @GET("/shows/{showId}/extras/")
     suspend fun getExtras(@Path("showId") showId: Int): Response<List<Extra>>
 
-    @GET("/shows/{showId}/seasons/{seasonId}/episodes/")
+    @GET("$URL_BASE/shows/{showId}/seasons/{seasonId}/episodes/$URL_PARAMS")
     suspend fun getEpisodes(
         @Path("showId") showId: Int,
         @Path("seasonId") seasonId: Int

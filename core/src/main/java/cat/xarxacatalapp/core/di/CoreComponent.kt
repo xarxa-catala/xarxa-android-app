@@ -1,6 +1,8 @@
 package cat.xarxacatalapp.core.di
 
 import android.content.Context
+import cat.xarxacatalapp.core.db.dao.EpisodeDao
+import cat.xarxacatalapp.core.db.dao.SeasonDao
 import cat.xarxacatalapp.core.db.dao.ShowDao
 import cat.xarxacatalapp.core.network.XarxaCatalaService
 import dagger.BindsInstance
@@ -21,6 +23,8 @@ interface CoreComponent {
     }
 
     fun showDao(): ShowDao
+    fun seasonDao(): SeasonDao
+    fun episodeDao(): EpisodeDao
 
     fun xarxaCatalaService(): XarxaCatalaService
 }

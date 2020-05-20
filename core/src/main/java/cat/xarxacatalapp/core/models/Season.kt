@@ -9,10 +9,8 @@ data class Season(
     @PrimaryKey
     @SerializedName("id")
     val id: Int,
-    @SerializedName("name")
+    @SerializedName("nom")
     val name: String,
-    @SerializedName("number")
-    val number: Int,
     @SerializedName("show_id")
     val showId: Int,
     @SerializedName("url")

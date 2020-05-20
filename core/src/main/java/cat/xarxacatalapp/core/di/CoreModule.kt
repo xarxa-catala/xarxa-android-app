@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import cat.xarxacatalapp.core.db.XarxaCatDb
+import cat.xarxacatalapp.core.db.dao.EpisodeDao
 import cat.xarxacatalapp.core.db.dao.SeasonDao
 import cat.xarxacatalapp.core.db.dao.ShowDao
 import cat.xarxacatalapp.core.network.XarxaCatalaService
@@ -41,6 +42,10 @@ class CoreModule {
     @Singleton
     @Provides
     fun provideSeasonDao(db: XarxaCatDb): SeasonDao = db.seasonDao()
+
+    @Singleton
+    @Provides
+    fun provideEpisodeDao(db: XarxaCatDb): EpisodeDao = db.episodeDao()
 
     @Singleton
     @Provides
