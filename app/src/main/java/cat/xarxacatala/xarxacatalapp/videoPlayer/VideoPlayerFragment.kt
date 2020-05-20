@@ -10,10 +10,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import cat.xarxacatala.xarxacatalapp.BaseFragment
+import cat.xarxacatala.xarxacatalapp.MainActivity
 import cat.xarxacatala.xarxacatalapp.R
 import cat.xarxacatala.xarxacatalapp.XarxaCatApp
 import cat.xarxacatala.xarxacatalapp.di.injectViewModel
@@ -48,10 +50,11 @@ class VideoPlayerFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
-        val a: Activity? = activity
-        if (a != null) a.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-
-        //activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        val a = activity as MainActivity?
+        if (a != null) {
+            a.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            a.fullScreen()
+        }
     }
 
     override fun onCreateView(

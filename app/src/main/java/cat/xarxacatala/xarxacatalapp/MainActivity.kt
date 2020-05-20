@@ -20,6 +20,9 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
@@ -27,6 +30,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * An activity that inflates a layout that has a [BottomNavigationView].
@@ -71,7 +75,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavMenu(navController: NavController) {
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNav?.setupWithNavController(navController)
     }
 
@@ -103,5 +106,25 @@ class MainActivity : AppCompatActivity() {
         // Allows NavigationUI to support proper up navigation or the drawer layout
         // drawer menu, depending on the situation
         return findNavController(R.id.nav_host_container).navigateUp(appBarConfiguration)
+    }
+
+    fun fullScreen() {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+
+        toolbar.visibility = GONE
+        bottomNav.visibility = GONE
+    }
+
+    fun removeFullScreen() {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN
+        )
+        //window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        toolbar.visibility = VISIBLE
+        bottomNav.visibility = VISIBLE
     }
 }
