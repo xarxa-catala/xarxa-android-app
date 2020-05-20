@@ -101,7 +101,7 @@ class ShowDetailFragment : BaseFragment() {
         spnSeasons.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(
                 parentView: AdapterView<*>?,
-                selectedItemView: View,
+                selectedItemView: View?,
                 position: Int,
                 id: Long
             ) {
