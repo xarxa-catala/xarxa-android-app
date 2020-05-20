@@ -18,4 +18,7 @@ interface EpisodeDao {
 
     @Query("SELECT * FROM episode WHERE showId = :showId AND seasonId = :seasonId")
     fun loadEpisodes(showId: Int, seasonId: Int): LiveData<List<Episode>>
+
+    @Query("SELECT * FROM episode WHERE id = :episodeId")
+    fun loadEpisode(episodeId: Int): LiveData<Episode>
 }

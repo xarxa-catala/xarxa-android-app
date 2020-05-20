@@ -20,7 +20,6 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
@@ -63,10 +62,10 @@ class MainActivity : AppCompatActivity() {
                 Integer.toString(destination.id)
             }
 
-            Toast.makeText(
-                this@MainActivity, "Navigated to $dest",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                this@MainActivity, "Navigated to $dest",
+//                Toast.LENGTH_SHORT
+//            ).show()
             Log.d("NavigationActivity", "Navigated to $dest")
         }
     }

@@ -10,18 +10,14 @@ class EpisodesRepository @Inject constructor(
     private val service: XarxaCatalaService
 ) {
     fun episodes(showId: Int, seasonId: Int) = resultLiveData(
-
         databaseQuery = { dao.loadEpisodes(showId, seasonId) },
         networkCall = { service.getEpisodes(showId, seasonId) },
-        saveCallResult = {
-            //TODO: Once the backend implements the seasonId into the json, remove this assignation and set seasonId as "val"
-            val episodes = it.body()!!
+        saveCallResult = { dao.insertAll(it.body()!!) }
+    )
 
-            episodes.forEach { episode ->
-                episode.seasonId = seasonId
-            }
-
-            dao.insertAll(episodes)
-        }
+    fun episode(episodeId: Int)  = resultLiveData(
+        databaseQuery = { dao.loadEpisode(episodeId) },
+        networkCall = { null },
+        saveCallResult = { }
     )
 }

@@ -17,7 +17,7 @@
 <resources>
     <string name="app_name">Xarxa Català</string>
     <string name="title_home">Sèries</string>
-    <string name="title_downloads">Descàrregues</string>
+    <string name="title_downloads">Baixades</string>
     <string name="title_watching">My shows</string>
 
     <!-- TODO: Remove or change this placeholder text -->
