@@ -51,6 +51,7 @@ class ShowsFragment : BaseFragment() {
 
     private fun subscribeUi(adapter: ShowsListAdapter) {
         viewModel.shows.observe(viewLifecycleOwner, Observer { result ->
+
             when (result.status) {
                 CallResult.Status.SUCCESS -> {
                     pbLoading.visibility = GONE

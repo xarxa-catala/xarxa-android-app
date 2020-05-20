@@ -12,7 +12,7 @@ import cat.xarxacatala.xarxacatalapp.R
 import cat.xarxacatalapp.core.models.Episode
 
 
-class EpiodesListAdapter : ListAdapter<Episode, EpiodesListAdapter.EpisodeViewHolder>(
+class EpisodesListAdapter : ListAdapter<Episode, EpisodesListAdapter.EpisodeViewHolder>(
     DiffCallback()
 ) {
 

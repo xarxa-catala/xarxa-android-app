@@ -17,6 +17,7 @@ import cat.xarxacatala.xarxacatalapp.R
 import cat.xarxacatala.xarxacatalapp.XarxaCatApp
 import cat.xarxacatala.xarxacatalapp.di.injectViewModel
 import cat.xarxacatalapp.core.CallResult
+import cat.xarxacatalapp.core.models.Episode
 import cat.xarxacatalapp.core.models.Season
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_show_detail.*
@@ -32,9 +33,11 @@ class ShowDetailFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: ShowDetailViewModel
 
+    private var epsObserver: Observer<CallResult<List<Episode>>>? = null
+
     val args: ShowDetailFragmentArgs by navArgs()
 
-    private lateinit var episodesAdapter: EpiodesListAdapter
+    private lateinit var episodesAdapter: EpisodesListAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -59,7 +62,7 @@ class ShowDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        episodesAdapter = EpiodesListAdapter()
+        episodesAdapter = EpisodesListAdapter()
         rvEpisodes.layoutManager = LinearLayoutManager(requireContext())
         rvEpisodes.adapter = episodesAdapter
 
@@ -105,6 +108,7 @@ class ShowDetailFragment : BaseFragment() {
                 position: Int,
                 id: Long
             ) {
+                // TODO: Check why spinner triggers onItemSelected twice when starting the activity
                 loadEpisodes(
                     spnSeasons.adapter.getItem(
                         position
@@ -119,9 +123,16 @@ class ShowDetailFragment : BaseFragment() {
     }
 
     private fun loadEpisodes(season: Season) {
+
+        // After changing the selected season, we don't want to keep observing the changes to
+        // the episodes of the previous season selected
+        epsObserver?.let {
+            viewModel.episodes.removeObserver(it)
+        }
+
         viewModel.seasonId = season.id
 
-        viewModel.episodes.observe(viewLifecycleOwner, Observer { result ->
+        epsObserver = Observer<CallResult<List<Episode>>> { result ->
             when (result.status) {
                 CallResult.Status.SUCCESS -> {
                     result.data?.let { episodes ->
@@ -134,6 +145,7 @@ class ShowDetailFragment : BaseFragment() {
                     Snackbar.make(rootView, result.message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
-        })
+        }
+        viewModel.episodes.observe(viewLifecycleOwner, epsObserver!!)
     }
 }

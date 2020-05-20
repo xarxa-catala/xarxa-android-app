@@ -16,7 +16,9 @@ class ShowsRepository @Inject constructor(
     val shows = resultLiveData(
         databaseQuery = { dao.loadAllShows() },
         networkCall = { service.shows() },
-        saveCallResult = { dao.insertAll(it.body()!!) }
+        saveCallResult = {
+            dao.insertAll(it.body()!!)
+        }
     )
 
     fun show(showId: Int): LiveData<CallResult<Show>> = resultLiveData(
