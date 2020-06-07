@@ -9,7 +9,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import cat.xarxacatala.xarxacatalapp.BaseFragment
 import cat.xarxacatala.xarxacatalapp.R
 import cat.xarxacatala.xarxacatalapp.XarxaCatApp
@@ -43,10 +43,13 @@ class ShowsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rvShows.layoutManager = LinearLayoutManager(context)
-        val adapter = ShowsListAdapter()
-        rvShows.adapter = adapter
-        subscribeUi(adapter)
+
+        rvShows.layoutManager = GridLayoutManager(context, 2)
+        context?.let { context ->
+            val adapter = ShowsListAdapter(context)
+            rvShows.adapter = adapter
+            subscribeUi(adapter)
+        }
     }
 
     private fun subscribeUi(adapter: ShowsListAdapter) {
@@ -55,7 +58,7 @@ class ShowsFragment : BaseFragment() {
             when (result.status) {
                 CallResult.Status.SUCCESS -> {
                     pbLoading.visibility = GONE
-                    //binding.progressBar.hide()
+
                     result.data?.let {
                         adapter.submitList(it)
                     }

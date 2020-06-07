@@ -1,8 +1,10 @@
 package cat.xarxacatala.xarxacatalapp.shows
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
@@ -10,8 +12,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cat.xarxacatala.xarxacatalapp.R
 import cat.xarxacatalapp.core.models.Show
+import com.bumptech.glide.Glide
 
-class ShowsListAdapter : ListAdapter<Show, ShowsListAdapter.ShowViewHolder>(
+class ShowsListAdapter(val context: Context) : ListAdapter<Show, ShowsListAdapter.ShowViewHolder>(
     DiffCallback()
 ) {
 
@@ -26,8 +29,18 @@ class ShowsListAdapter : ListAdapter<Show, ShowsListAdapter.ShowViewHolder>(
     }
 
     inner class ShowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private var tvShowTitle: TextView = itemView.findViewById(R.id.tvShowTitle)
+        private var ivShowThumbnail: ImageView = itemView.findViewById(R.id.ivShowThumbnail)
+
+
         fun bind(show: Show) {
-            itemView.findViewById<TextView>(R.id.tvShowTitle).text = show.name
+            tvShowTitle.text = show.name
+
+            Glide.with(context)
+                .load(show.thumbnail)
+                .centerCrop()
+                .into(ivShowThumbnail)
+
             itemView.setOnClickListener {
                 val action = ShowsFragmentDirections.actionHomeToShowDetailFragment(show.id)
                 it.findNavController().navigate(action)

@@ -50,6 +50,7 @@ class VideoPlayerFragment : BaseFragment() {
 
         val a = activity as MainActivity?
         if (a != null) {
+
             a.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
             a.fullScreen()
         }
@@ -76,6 +77,7 @@ class VideoPlayerFragment : BaseFragment() {
         // Attach player to the view.
         playerView.player = player;
         // Prepare the player with the media source.
+
 
     }
 

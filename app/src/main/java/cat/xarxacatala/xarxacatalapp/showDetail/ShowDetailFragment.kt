@@ -62,9 +62,11 @@ class ShowDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        episodesAdapter = EpisodesListAdapter()
-        rvEpisodes.layoutManager = LinearLayoutManager(requireContext())
-        rvEpisodes.adapter = episodesAdapter
+        context?.let { context ->
+            episodesAdapter = EpisodesListAdapter(context)
+            rvEpisodes.layoutManager = LinearLayoutManager(requireContext())
+            rvEpisodes.adapter = episodesAdapter
+        }
 
         subscribeUi()
     }

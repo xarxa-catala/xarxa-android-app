@@ -20,9 +20,9 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
@@ -109,20 +109,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun fullScreen() {
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
+//        val flags =
+//            View.SYSTEM_UI_FLAG_FULLSCREEN or
+//                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+//                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
+        var flags =
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_FULLSCREEN
+
+        flags =
+            flags or (View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+
+        window.decorView.systemUiVisibility = flags;
+//        window.setFlags(
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN
+//        )
 
         toolbar.visibility = GONE
         bottomNav.visibility = GONE
     }
 
     fun removeFullScreen() {
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN
-        )
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE;
+//        window.setFlags(
+//            WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
+//            WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN
+//        )
         //window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         toolbar.visibility = VISIBLE
         bottomNav.visibility = VISIBLE
