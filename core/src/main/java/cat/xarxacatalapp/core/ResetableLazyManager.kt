@@ -1,4 +1,4 @@
-package cat.xarxacatalapp
+package cat.xarxacatalapp.core
 
 import java.util.*
 import kotlin.reflect.KProperty

@@ -53,9 +53,6 @@ class ShowDetailFragment : BaseFragment() {
         viewModel = injectViewModel(viewModelFactory)
         viewModel.showId = args.showId
 
-        //val adapter = ShowsListAdapter()
-        //spnSeasons.adapter = adapter
-
         return inflater.inflate(R.layout.fragment_show_detail, container, false)
     }
 

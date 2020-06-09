@@ -12,5 +12,7 @@ data class Show(
     @SerializedName("nom")
     val name: String,
     @SerializedName("url")
-    val url: String
+    val url: String,
+    @SerializedName("thumbnail")
+    val thumbnail: String
 )
