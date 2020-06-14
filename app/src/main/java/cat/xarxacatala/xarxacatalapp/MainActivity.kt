@@ -66,10 +66,6 @@ class MainActivity : AppCompatActivity() {
                 Integer.toString(destination.id)
             }
 
-//            Toast.makeText(
-//                this@MainActivity, "Navigated to $dest",
-//                Toast.LENGTH_SHORT
-//            ).show()
             Log.d("NavigationActivity", "Navigated to $dest")
         }
     }
@@ -85,18 +81,6 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfig)
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        val retValue = super.onCreateOptionsMenu(menu)
-//        val navigationView = findViewById<NavigationView>(R.id.nav_view)
-//        // The NavigationView already has these same navigation items, so we only add
-//        // navigation items to the menu here if there isn't a NavigationView
-//        if (navigationView == null) {
-//            menuInflater.inflate(R.menu.overflow_menu, menu)
-//            return true
-//        }
-//        return retValue
-//    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return item.onNavDestinationSelected(findNavController(R.id.nav_host_container))
                 || super.onOptionsItemSelected(item)
@@ -109,11 +93,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun fullScreen() {
-//        val flags =
-//            View.SYSTEM_UI_FLAG_FULLSCREEN or
-//                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-//                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-
         var flags =
             View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_FULLSCREEN
 
@@ -122,10 +101,6 @@ class MainActivity : AppCompatActivity() {
                     View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
 
         window.decorView.systemUiVisibility = flags;
-//        window.setFlags(
-//            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//            WindowManager.LayoutParams.FLAG_FULLSCREEN
-//        )
 
         toolbar.visibility = GONE
         bottomNav.visibility = GONE
@@ -133,11 +108,7 @@ class MainActivity : AppCompatActivity() {
 
     fun removeFullScreen() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE;
-//        window.setFlags(
-//            WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
-//            WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN
-//        )
-        //window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+
         toolbar.visibility = VISIBLE
         bottomNav.visibility = VISIBLE
     }
