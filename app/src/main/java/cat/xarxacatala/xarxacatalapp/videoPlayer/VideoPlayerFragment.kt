@@ -18,12 +18,14 @@ import cat.xarxacatala.xarxacatalapp.R
 import cat.xarxacatala.xarxacatalapp.XarxaCatApp
 import cat.xarxacatala.xarxacatalapp.di.injectViewModel
 import cat.xarxacatalapp.core.CallResult
+import cat.xarxacatalapp.core.models.Episode
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
+import kotlinx.android.synthetic.main.exo_playback_control_view.*
 import kotlinx.android.synthetic.main.fragment_video_player.*
 import javax.inject.Inject
 
@@ -34,6 +36,7 @@ class VideoPlayerFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: VideoPlayerViewModel
     private lateinit var player: SimpleExoPlayer
+
 
     val args: VideoPlayerFragmentArgs by navArgs()
 
@@ -75,34 +78,40 @@ class VideoPlayerFragment : BaseFragment() {
         player = SimpleExoPlayer.Builder(requireContext()).build();
 
         // Attach player to the view.
-        playerView.player = player;
-        // Prepare the player with the media source.
-
+        playerView.player = player
 
     }
 
     private fun subscribeUi() {
         viewModel.episode.observe(viewLifecycleOwner, Observer {
             if (it.status == CallResult.Status.SUCCESS) {
+
+                loadEpisode(it.data!!)
                 // Produces DataSource instances through which media data is loaded.
-                val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(
-                    context,
-                    Util.getUserAgent(requireContext(), "XarxaCatalApp")
-                )
 
-                val url = it.data!!.url
-
-                Log.e("ABDE", "The media URL is $url")
-
-                // This is the MediaSource representing the media to be played.
-                val videoSource: MediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(Uri.parse(url))
-
-                // Prepare the player with the source.
-                player.prepare(videoSource)
-                player.playWhenReady = true
             }
         })
+    }
+
+    private fun loadEpisode(episode: Episode) {
+        val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(
+            context,
+            Util.getUserAgent(requireContext(), "XarxaCatalApp")
+        )
+
+        tvTitle.text = episode.name
+
+        val url = episode.url
+
+        Log.e("ABDE", "The media URL is $url")
+
+        // This is the MediaSource representing the media to be played.
+        val videoSource: MediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
+            .createMediaSource(Uri.parse(url))
+
+        // Prepare the player with the source.
+        player.prepare(videoSource)
+        player.playWhenReady = true
     }
 
     override fun onStop() {
