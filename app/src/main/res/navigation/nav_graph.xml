@@ -44,7 +44,6 @@
     <fragment
             android:id="@+id/videoPlayerFragment"
             android:name="cat.xarxacatala.xarxacatalapp.videoPlayer.VideoPlayerFragment"
-            android:label="fragment_video_player"
             tools:layout="@layout/fragment_video_player">
         <argument
                 android:name="episodeId"
@@ -65,7 +64,6 @@
     <fragment
             android:id="@+id/showDetailFragment"
             android:name="cat.xarxacatala.xarxacatalapp.showDetail.ShowDetailFragment"
-            android:label="fragment_show_detail"
             tools:layout="@layout/fragment_show_detail">
         <argument
                 android:name="showId"

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cat.xarxacatala.xarxacatalapp.R
 import cat.xarxacatalapp.core.models.Episode
-import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
 
@@ -40,11 +39,12 @@ class EpisodesListAdapter(val context: Context) :
 
             val requestOptions = RequestOptions()
             requestOptions.isMemoryCacheable
-            Glide.with(context)
-                .setDefaultRequestOptions(requestOptions)
-                .load(episode.url)
-                .centerCrop()
-                .into(ivEpisodeThumbnail)
+//            Glide.with(context)
+//                .setDefaultRequestOptions(requestOptions)
+//                .load(episode.url)
+//                .thumbnail(0.1f)
+//                .centerCrop()
+//                .into(ivEpisodeThumbnail)
 
             itemView.setOnClickListener {
                 val action =

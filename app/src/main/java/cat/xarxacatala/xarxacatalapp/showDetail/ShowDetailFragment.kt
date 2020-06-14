@@ -16,9 +16,11 @@ import cat.xarxacatala.xarxacatalapp.BaseFragment
 import cat.xarxacatala.xarxacatalapp.R
 import cat.xarxacatala.xarxacatalapp.XarxaCatApp
 import cat.xarxacatala.xarxacatalapp.di.injectViewModel
+import cat.xarxacatala.xarxacatalapp.utils.setToolbarTitle
 import cat.xarxacatalapp.core.CallResult
 import cat.xarxacatalapp.core.models.Episode
 import cat.xarxacatalapp.core.models.Season
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_show_detail.*
 import javax.inject.Inject
@@ -72,7 +74,11 @@ class ShowDetailFragment : BaseFragment() {
         viewModel.show.observe(viewLifecycleOwner, Observer { result ->
             if (result.status == CallResult.Status.SUCCESS) {
                 result.data?.let {
-                    tvShowName.text = it.name
+                    setToolbarTitle(it.name)
+
+                    Glide.with(this)
+                        .load(it.thumbnail)
+                        .into(ivShowThumbnail)
                 }
             }
         })
@@ -80,8 +86,6 @@ class ShowDetailFragment : BaseFragment() {
         viewModel.seasons.observe(viewLifecycleOwner, Observer { result ->
             when (result.status) {
                 CallResult.Status.SUCCESS -> {
-                    //pbLoading.visibility = View.GONE
-                    //binding.progressBar.hide()
                     result.data?.let { seasons ->
 
                         val adapter = SeasonsAdapter(
@@ -92,9 +96,8 @@ class ShowDetailFragment : BaseFragment() {
                         spnSeasons.adapter = adapter
                     }
                 }
-                //Result.Status.LOADING -> pbLoading.visibility = View.VISIBLE
+
                 CallResult.Status.ERROR -> {
-                    //pbLoading.visibility = View.GONE
                     Snackbar.make(rootView, result.message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
