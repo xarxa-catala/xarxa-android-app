@@ -23,8 +23,7 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.source.TrackGroupArray
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
@@ -57,7 +56,6 @@ class VideoPlayerFragment : BaseFragment() {
 
         val a = activity as MainActivity?
         if (a != null) {
-
             a.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
             a.fullScreen()
         }
@@ -79,13 +77,29 @@ class VideoPlayerFragment : BaseFragment() {
 
         subscribeUi()
 
-        player = SimpleExoPlayer.Builder(requireContext()).build();
+        context?.let {
+            setupPlayer(it)
+        }
+    }
+
+    private fun setupPlayer(context: Context) {
+        val trackSelector = DefaultTrackSelector(context)
+        trackSelector.setParameters(
+            trackSelector
+                .buildUponParameters()
+                .setPreferredAudioLanguage("ca")
+        )
+
+
+        player = SimpleExoPlayer.Builder(requireContext())
+            .setTrackSelector(trackSelector)
+            .build()
 
         player.addListener(PlayerEventListener(playerView))
 
+
         // Attach player to the view.
         playerView.player = player
-
     }
 
     private fun subscribeUi() {
