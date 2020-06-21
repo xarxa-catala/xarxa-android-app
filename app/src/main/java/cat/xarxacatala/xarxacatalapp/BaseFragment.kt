@@ -11,7 +11,7 @@ abstract class BaseFragment : Fragment() {
 
         val a = activity as MainActivity?
         if (a != null) {
-            a.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
+            a.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
             a.removeFullScreen()
         }
     }
