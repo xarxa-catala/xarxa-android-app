@@ -14,8 +14,8 @@ interface XarxaCatalaService {
     @GET("$URL_BASE/shows/")
     suspend fun shows(): Response<List<Show>>
 
-    @GET("$URL_BASE/shows/{showId}/seasons/")
-    suspend fun getSeasons(@Path("showId") showId: Int): Response<List<Season>>
+    @GET("$URL_BASE/shows/{showId}/playlists/")
+    suspend fun getPlaylists(@Path("showId") showId: Int): Response<List<Playlist>>
 
     @GET("$URL_BASE/shows/{showId}/films/")
     suspend fun getFilms(@Path("showId") showId: Int): Response<List<Film>>
@@ -23,10 +23,10 @@ interface XarxaCatalaService {
     @GET("$URL_BASE/shows/{showId}/extras/")
     suspend fun getExtras(@Path("showId") showId: Int): Response<List<Extra>>
 
-    @GET("$URL_BASE/shows/{showId}/seasons/{seasonId}/episodes/")
+    @GET("$URL_BASE/shows/{showId}/playlists/{playlistId}/videos/")
     suspend fun getEpisodes(
         @Path("showId") showId: Int,
-        @Path("seasonId") seasonId: Int
+        @Path("playlistId") playlistId: Int
     ): Response<List<Episode>>
 
 

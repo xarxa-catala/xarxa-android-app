@@ -16,8 +16,9 @@ interface EpisodeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(shows: List<Episode>)
 
-    @Query("SELECT * FROM episode WHERE showId = :showId AND seasonId = :seasonId")
-    fun loadEpisodes(showId: Int, seasonId: Int): LiveData<List<Episode>>
+    //FIXME: Once the API implements  it, this should filter by PlaylistId
+    @Query("SELECT * FROM episode WHERE showId = :showId AND playlistId = :playlistId")
+    fun loadEpisodes(showId: Int, playlistId: Int): LiveData<List<Episode>>
 
     @Query("SELECT * FROM episode WHERE id = :episodeId")
     fun loadEpisode(episodeId: Int): LiveData<Episode>

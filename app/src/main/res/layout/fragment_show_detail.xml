@@ -21,8 +21,9 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/avatars" />
 
-        <Spinner
-                android:id="@+id/spnSeasons"
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -30,7 +31,17 @@
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivShowThumbnail" />
+                app:layout_constraintTop_toBottomOf="@+id/ivShowThumbnail">
+
+            <AutoCompleteTextView
+                    android:id="@+id/tvPlaylists"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:focusable="false" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvEpisodes"
@@ -40,6 +51,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spnSeasons" />
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

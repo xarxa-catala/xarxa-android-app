@@ -197,8 +197,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="256" />
-                            <option name="y" value="12" />
+                            <option name="x" value="-920" />
+                            <option name="y" value="-574" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -208,7 +208,7 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_downloads_to_videoPlayerFragment2">
+                            <entry key="action_downloads_to_videoPlayerFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -223,8 +223,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="12" />
+                            <option name="x" value="-904" />
+                            <option name="y" value="-186" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -250,7 +250,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_showDetailFragment_to_videoPlayerFragment2">
+                            <entry key="action_showDetailFragment_to_videoPlayerFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -260,13 +260,13 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="videoPlayerFragment2">
+                  <entry key="videoPlayerFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-175" />
-                            <option name="y" value="-579" />
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -277,8 +277,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="368" />
+                            <option name="x" value="-897" />
+                            <option name="y" value="226" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -288,7 +288,7 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_watching_to_videoPlayerFragment2">
+                            <entry key="action_watching_to_videoPlayerFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

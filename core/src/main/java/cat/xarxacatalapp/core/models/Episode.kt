@@ -11,8 +11,8 @@ data class Episode(
     val id: Int,
     @SerializedName("nom")
     val name: String,
-    @SerializedName("season_id")
-    var seasonId: Int,
+    @SerializedName("playlist_id")
+    var playlistId: Int,
 //    //FIXME: This shouldn't be ignored
 //    @SerializedName("prequels")
 //    @Ignore

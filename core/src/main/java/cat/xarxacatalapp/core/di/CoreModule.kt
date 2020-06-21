@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.room.Room
 import cat.xarxacatalapp.core.db.XarxaCatDb
 import cat.xarxacatalapp.core.db.dao.EpisodeDao
-import cat.xarxacatalapp.core.db.dao.SeasonDao
+import cat.xarxacatalapp.core.db.dao.PlaylistDao
 import cat.xarxacatalapp.core.db.dao.ShowDao
 import cat.xarxacatalapp.core.network.XarxaCatalaService
 import dagger.Module
@@ -41,7 +41,7 @@ class CoreModule {
 
     @Singleton
     @Provides
-    fun provideSeasonDao(db: XarxaCatDb): SeasonDao = db.seasonDao()
+    fun providePlaylistDao(db: XarxaCatDb): PlaylistDao = db.playlistDao()
 
     @Singleton
     @Provides

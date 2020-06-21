@@ -5,14 +5,18 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity
-data class Season(
+data class Playlist(
     @PrimaryKey
     @SerializedName("id")
     val id: Int,
     @SerializedName("nom")
     val name: String,
     @SerializedName("show_id")
-    val showId: Int,
-    @SerializedName("url")
-    val url: String
-)
+    val showId: Int
+
+
+) {
+    override fun toString(): String {
+        return name
+    }
+}

@@ -32,7 +32,6 @@ class EpisodesListAdapter(val context: Context) :
 
     inner class EpisodeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvEpisodeName = itemView.findViewById<TextView>(R.id.tvEpisodeName)
-        val ivEpisodeThumbnail = itemView.findViewById<ImageView>(R.id.ivEpisodeThumbnail)
 
         fun bind(episode: Episode) {
             itemView.findViewById<TextView>(R.id.tvEpisodeName).text = episode.name

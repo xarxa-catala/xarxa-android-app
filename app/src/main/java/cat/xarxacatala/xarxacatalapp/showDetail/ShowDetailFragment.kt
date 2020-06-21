@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,7 +18,7 @@ import cat.xarxacatala.xarxacatalapp.di.injectViewModel
 import cat.xarxacatala.xarxacatalapp.utils.setToolbarTitle
 import cat.xarxacatalapp.core.CallResult
 import cat.xarxacatalapp.core.models.Episode
-import cat.xarxacatalapp.core.models.Season
+import cat.xarxacatalapp.core.models.Playlist
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_show_detail.*
@@ -83,17 +82,33 @@ class ShowDetailFragment : BaseFragment() {
             }
         })
 
-        viewModel.seasons.observe(viewLifecycleOwner, Observer { result ->
+        viewModel.playlists.observe(viewLifecycleOwner, Observer { result ->
             when (result.status) {
                 CallResult.Status.SUCCESS -> {
-                    result.data?.let { seasons ->
+                    result.data?.let { playlists ->
 
-                        val adapter = SeasonsAdapter(
+                        val adapter = PlaylistsAdapter(
                             requireContext(),
-                            seasons
+                            playlists
                         )
 
-                        spnSeasons.adapter = adapter
+                        tvPlaylists.setAdapter(adapter)
+
+
+                        if (viewModel.playlistId != 0) {
+                            // Select the previous item after refreshing data or returning from a previous screen
+                            playlists.forEach {
+                                if (it.id == viewModel.playlistId) {
+                                    loadEpisodes(it)
+                                }
+                            }
+                        } else if (playlists.count() > 0) {
+                            // Load the first item if nothing has been selected previously
+                            val firstPlaylist = playlists.first()
+                            tvPlaylists.setText(firstPlaylist.name)
+                            loadEpisodes(firstPlaylist)
+                        }
+
                     }
                 }
 
@@ -103,36 +118,25 @@ class ShowDetailFragment : BaseFragment() {
             }
         })
 
-        spnSeasons.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                parentView: AdapterView<*>?,
-                selectedItemView: View?,
-                position: Int,
-                id: Long
-            ) {
-                // TODO: Check why spinner triggers onItemSelected twice when starting the activity
+        tvPlaylists.onItemClickListener =
+            AdapterView.OnItemClickListener { parent, view, position, id ->
                 loadEpisodes(
-                    spnSeasons.adapter.getItem(
+                    tvPlaylists.adapter.getItem(
                         position
-                    ) as Season
+                    ) as Playlist
                 )
             }
-
-            override fun onNothingSelected(parentView: AdapterView<*>?) {
-                // your code here
-            }
-        }
     }
 
-    private fun loadEpisodes(season: Season) {
+    private fun loadEpisodes(playlist: Playlist) {
 
-        // After changing the selected season, we don't want to keep observing the changes to
-        // the episodes of the previous season selected
+        // After changing the selected playlist, we don't want to keep observing the changes to
+        // the episodes of the previous playlist selected
         epsObserver?.let {
             viewModel.episodes.removeObserver(it)
         }
 
-        viewModel.seasonId = season.id
+        viewModel.playlistId = playlist.id
 
         epsObserver = Observer<CallResult<List<Episode>>> { result ->
             when (result.status) {
@@ -141,13 +145,12 @@ class ShowDetailFragment : BaseFragment() {
                         episodesAdapter.submitList(episodes)
                     }
                 }
-                //Result.Status.LOADING -> pbLoading.visibility = View.VISIBLE
                 CallResult.Status.ERROR -> {
-                    //pbLoading.visibility = View.GONE
                     Snackbar.make(rootView, result.message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }
+
         viewModel.episodes.observe(viewLifecycleOwner, epsObserver!!)
     }
 }

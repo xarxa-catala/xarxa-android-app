@@ -19,9 +19,13 @@ import cat.xarxacatala.xarxacatalapp.XarxaCatApp
 import cat.xarxacatala.xarxacatalapp.di.injectViewModel
 import cat.xarxacatalapp.core.CallResult
 import cat.xarxacatalapp.core.models.Episode
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.source.TrackGroupArray
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray
+import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
@@ -77,6 +81,8 @@ class VideoPlayerFragment : BaseFragment() {
 
         player = SimpleExoPlayer.Builder(requireContext()).build();
 
+        player.addListener(PlayerEventListener(playerView))
+
         // Attach player to the view.
         playerView.player = player
 
@@ -118,5 +124,16 @@ class VideoPlayerFragment : BaseFragment() {
         super.onStop()
 
         player.stop()
+    }
+
+    private class PlayerEventListener(val playerView: PlayerView) : Player.EventListener {
+        override fun onPlayerStateChanged(
+            playWhenReady: Boolean,
+            playbackState: Int
+        ) {
+            playerView.keepScreenOn =
+                !(playbackState == Player.STATE_IDLE || playbackState == Player.STATE_ENDED ||
+                        !playWhenReady)
+        }
     }
 }

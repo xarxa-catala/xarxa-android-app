@@ -5,14 +5,14 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import cat.xarxacatalapp.core.models.Season
+import cat.xarxacatalapp.core.models.Playlist
 
 @Dao
-interface SeasonDao {
-    @Query("SELECT * FROM season WHERE showId = :showId")
-    fun loadSeasons(showId: Int): LiveData<List<Season>>
+interface PlaylistDao {
+    @Query("SELECT * FROM playlist WHERE showId = :showId")
+    fun loadPlaylists(showId: Int): LiveData<List<Playlist>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(seasons: List<Season>)
+    fun insertAll(playlists: List<Playlist>)
 
 }
