@@ -18,8 +18,8 @@
     <string name="app_name">Xarxa Català</string>
     <string name="title_home">Sèries</string>
     <string name="title_downloads">Baixades</string>
-    <string name="title_watching">My shows</string>
+    <string name="title_watching">Historial</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="not_available">Funcionalitat encara no disponible. Estarà disponible en un futur no molt llunyà!</string>
 </resources>
