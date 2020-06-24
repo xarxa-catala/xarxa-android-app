@@ -105,7 +105,7 @@ class ShowDetailFragment : BaseFragment() {
                         } else if (playlists.count() > 0) {
                             // Load the first item if nothing has been selected previously
                             val firstPlaylist = playlists.first()
-                            tvPlaylists.setText(firstPlaylist.name)
+                            tvPlaylists.setText(firstPlaylist.name, false)
                             loadEpisodes(firstPlaylist)
                         }
 
