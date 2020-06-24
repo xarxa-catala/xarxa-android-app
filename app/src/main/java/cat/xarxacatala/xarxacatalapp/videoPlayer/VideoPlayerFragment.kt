@@ -1,8 +1,6 @@
 package cat.xarxacatala.xarxacatalapp.videoPlayer
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -21,7 +19,6 @@ import cat.xarxacatalapp.core.CallResult
 import cat.xarxacatalapp.core.models.Episode
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.PlayerView
@@ -40,25 +37,12 @@ class VideoPlayerFragment : BaseFragment() {
     private lateinit var viewModel: VideoPlayerViewModel
     private lateinit var player: SimpleExoPlayer
 
-
     val args: VideoPlayerFragmentArgs by navArgs()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         (activity?.application as XarxaCatApp).appComponent.inject(this)
-    }
-
-
-    @SuppressLint("SourceLockedOrientationActivity")
-    override fun onResume() {
-        super.onResume()
-
-        val a = activity as MainActivity?
-        if (a != null) {
-            a.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-            a.fullScreen()
-        }
     }
 
     override fun onCreateView(
@@ -75,8 +59,6 @@ class VideoPlayerFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        subscribeUi()
-
         context?.let {
             setupPlayer(it)
         }
@@ -90,13 +72,11 @@ class VideoPlayerFragment : BaseFragment() {
                 .setPreferredAudioLanguage("ca")
         )
 
-
         player = SimpleExoPlayer.Builder(requireContext())
             .setTrackSelector(trackSelector)
             .build()
 
         player.addListener(PlayerEventListener(playerView))
-
 
         // Attach player to the view.
         playerView.player = player
@@ -107,8 +87,6 @@ class VideoPlayerFragment : BaseFragment() {
             if (it.status == CallResult.Status.SUCCESS) {
 
                 loadEpisode(it.data!!)
-                // Produces DataSource instances through which media data is loaded.
-
             }
         })
     }
@@ -126,21 +104,31 @@ class VideoPlayerFragment : BaseFragment() {
         Log.e("ABDE", "The media URL is $url")
 
         // This is the MediaSource representing the media to be played.
-        val videoSource: MediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
+
+        val videoSource = ProgressiveMediaSource.Factory(dataSourceFactory)
             .createMediaSource(Uri.parse(url))
 
         // Prepare the player with the source.
-        player.prepare(videoSource)
-        player.playWhenReady = true
+        videoSource?.let {
+            player.prepare(it, false, true)
+            player.playWhenReady = true
+        }
+
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onResume() {
+        super.onResume()
+
+        subscribeUi()
+    }
+
+    override fun onPause() {
+        super.onPause()
 
         player.stop()
     }
 
-    private class PlayerEventListener(val playerView: PlayerView) : Player.EventListener {
+    private inner class PlayerEventListener(val playerView: PlayerView) : Player.EventListener {
         override fun onPlayerStateChanged(
             playWhenReady: Boolean,
             playbackState: Int
@@ -148,6 +136,8 @@ class VideoPlayerFragment : BaseFragment() {
             playerView.keepScreenOn =
                 !(playbackState == Player.STATE_IDLE || playbackState == Player.STATE_ENDED ||
                         !playWhenReady)
+
+            (activity as MainActivity).fullScreen()
         }
     }
 }

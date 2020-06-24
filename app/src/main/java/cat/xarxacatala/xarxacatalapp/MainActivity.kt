@@ -16,6 +16,7 @@
 
 package cat.xarxacatala.xarxacatalapp
 
+import android.content.pm.ActivityInfo
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
@@ -66,9 +67,44 @@ class MainActivity : AppCompatActivity() {
                 Integer.toString(destination.id)
             }
 
+            if (destination.id == R.id.videoPlayerFragment) {
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+
+                fullScreen()
+
+            } else {
+                showSystemUI()
+
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                toolbar.visibility = VISIBLE
+                bottomNav.visibility = VISIBLE
+            }
+
+
             Log.d("NavigationActivity", "Navigated to $dest")
         }
     }
+
+    fun fullScreen() {
+        toolbar.visibility = GONE
+        bottomNav.visibility = GONE
+
+        hideSystemUI()
+    }
+
+    private fun hideSystemUI() {
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN)
+    }
+    
+    private fun showSystemUI() {
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+    }
+
 
     private fun setupBottomNavMenu(navController: NavController) {
         bottomNav?.setupWithNavController(navController)
@@ -90,26 +126,5 @@ class MainActivity : AppCompatActivity() {
         // Allows NavigationUI to support proper up navigation or the drawer layout
         // drawer menu, depending on the situation
         return findNavController(R.id.nav_host_container).navigateUp(appBarConfiguration)
-    }
-
-    fun fullScreen() {
-        var flags =
-            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_FULLSCREEN
-
-        flags =
-            flags or (View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
-
-        window.decorView.systemUiVisibility = flags;
-
-        toolbar.visibility = GONE
-        bottomNav.visibility = GONE
-    }
-
-    fun removeFullScreen() {
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE;
-
-        toolbar.visibility = VISIBLE
-        bottomNav.visibility = VISIBLE
     }
 }
