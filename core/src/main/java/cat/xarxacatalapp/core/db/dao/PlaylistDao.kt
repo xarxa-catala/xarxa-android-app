@@ -9,7 +9,7 @@ import cat.xarxacatalapp.core.models.Playlist
 
 @Dao
 interface PlaylistDao {
-    @Query("SELECT * FROM playlist WHERE showId = :showId AND availableForApp = 1")
+    @Query("SELECT * FROM playlist WHERE showId = :showId AND availableForApp = 1 ORDER BY name")
     fun loadPlaylists(showId: Int): LiveData<List<Playlist>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
