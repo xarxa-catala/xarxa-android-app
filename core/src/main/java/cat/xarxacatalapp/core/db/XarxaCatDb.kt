@@ -15,7 +15,7 @@ import cat.xarxacatalapp.core.models.Show
         Playlist::class,
         Episode::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class XarxaCatDb : RoomDatabase() {

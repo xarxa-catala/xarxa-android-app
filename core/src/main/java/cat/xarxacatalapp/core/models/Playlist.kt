@@ -12,9 +12,9 @@ data class Playlist(
     @SerializedName("nom")
     val name: String,
     @SerializedName("show_id")
-    val showId: Int
-
-
+    val showId: Int,
+    @SerializedName("app")
+    val availableForApp: Boolean
 ) {
     override fun toString(): String {
         return name
