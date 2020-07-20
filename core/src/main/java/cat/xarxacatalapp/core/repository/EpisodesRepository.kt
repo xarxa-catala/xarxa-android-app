@@ -15,7 +15,7 @@ class EpisodesRepository @Inject constructor(
         saveCallResult = {
             val episodes = it.body()
 
-            if(episodes != null) {
+            if (episodes != null) {
                 episodes.forEach { it.playlistId = playlistId }
 
                 dao.insertAll(episodes)
@@ -23,9 +23,9 @@ class EpisodesRepository @Inject constructor(
         }
     )
 
-    fun episode(episodeId: Int)  = resultLiveData(
+    fun episode(episodeId: Int) = resultLiveData(
         databaseQuery = { dao.loadEpisode(episodeId) },
-        networkCall = { null },
+        networkCall = { },
         saveCallResult = { }
     )
 }

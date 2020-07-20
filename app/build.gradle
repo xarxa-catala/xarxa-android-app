@@ -40,9 +40,11 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0-alpha01'
     implementation "androidx.arch.core:core-runtime:2.1.0"
 
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.4'
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.11.4'
-    implementation 'com.google.android.exoplayer:exoplayer-dash:2.11.4'
+    def exoplayer_version = "2.11.4"
+    implementation "com.google.android.exoplayer:exoplayer-ui:$exoplayer_version"
+    implementation "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
+    implementation "com.google.android.exoplayer:exoplayer-dash:$exoplayer_version"
+    implementation "com.google.android.exoplayer:extension-cast:$exoplayer_version"
 
     def dagger_version = "2.27"
     implementation "com.google.dagger:dagger:$dagger_version"

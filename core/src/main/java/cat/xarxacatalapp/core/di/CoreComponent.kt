@@ -26,5 +26,7 @@ interface CoreComponent {
     fun playlistDao(): PlaylistDao
     fun episodeDao(): EpisodeDao
 
+    fun context(): Context
+
     fun xarxaCatalaService(): XarxaCatalaService
 }

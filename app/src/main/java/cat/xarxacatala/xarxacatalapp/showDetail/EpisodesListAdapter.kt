@@ -22,7 +22,7 @@ class EpisodesListAdapter(val context: Context) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EpisodeViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.adapter_episodes, parent, false);
+            LayoutInflater.from(parent.context).inflate(R.layout.adapter_episodes, parent, false)
         return EpisodeViewHolder(view)
     }
 
@@ -31,8 +31,6 @@ class EpisodesListAdapter(val context: Context) :
     }
 
     inner class EpisodeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvEpisodeName = itemView.findViewById<TextView>(R.id.tvEpisodeName)
-
         fun bind(episode: Episode) {
             itemView.findViewById<TextView>(R.id.tvEpisodeName).text = episode.name
 

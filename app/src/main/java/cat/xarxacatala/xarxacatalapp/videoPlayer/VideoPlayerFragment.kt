@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import cat.xarxacatala.xarxacatalapp.BaseFragment
 import cat.xarxacatala.xarxacatalapp.MainActivity
 import cat.xarxacatala.xarxacatalapp.R
 import cat.xarxacatala.xarxacatalapp.XarxaCatApp
+import cat.xarxacatala.xarxacatalapp.cast.KEY_EPISODE_ID
 import cat.xarxacatala.xarxacatalapp.di.injectViewModel
 import cat.xarxacatalapp.core.CallResult
 import cat.xarxacatalapp.core.models.Episode
@@ -24,7 +26,13 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.util.MimeTypes
 import com.google.android.exoplayer2.util.Util
+import com.google.android.gms.cast.MediaInfo
+import com.google.android.gms.cast.MediaMetadata
+import com.google.android.gms.cast.MediaQueueItem
+import com.google.android.gms.cast.framework.CastButtonFactory
+import com.google.android.gms.cast.framework.CastState
 import kotlinx.android.synthetic.main.exo_playback_control_view.*
 import kotlinx.android.synthetic.main.fragment_video_player.*
 import javax.inject.Inject
@@ -62,6 +70,19 @@ class VideoPlayerFragment : BaseFragment() {
         context?.let {
             setupPlayer(it)
         }
+
+        viewModel.castState.observe(viewLifecycleOwner, Observer { state ->
+            if (state == CastState.NO_DEVICES_AVAILABLE)
+                btnCast?.visibility = View.GONE
+            else {
+                if (btnCast?.visibility == View.GONE)
+                    btnCast?.visibility = View.VISIBLE
+            }
+        })
+
+        CastButtonFactory.setUpMediaRouteButton(requireContext(), btnCast);
+
+        btnCast.setRemoteIndicatorDrawable(resources.getDrawable(R.drawable.ic_cast))
     }
 
     private fun setupPlayer(context: Context) {
@@ -89,12 +110,20 @@ class VideoPlayerFragment : BaseFragment() {
                 loadEpisode(it.data!!)
             }
         })
+
+        viewModel.castPlayerLiveData.observe(viewLifecycleOwner, Observer { castPlayer ->
+            if (castPlayer != null && castPlayer.playbackState != Player.STATE_ENDED && castPlayer.playbackState != Player.STATE_IDLE) {
+                val action = VideoPlayerFragmentDirections.actionVideoPlayerFragmentToCastFragment()
+                view?.findNavController()?.navigate(action)
+                viewModel.castPlayerLiveData.removeObservers(viewLifecycleOwner)
+            }
+        })
     }
 
     private fun loadEpisode(episode: Episode) {
         val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(
             context,
-            Util.getUserAgent(requireContext(), "XarxaCatalApp")
+            Util.getUserAgent(requireContext(), "XarxaCatalaApp")
         )
 
         tvTitle.text = episode.name
@@ -114,6 +143,24 @@ class VideoPlayerFragment : BaseFragment() {
             player.playWhenReady = true
         }
 
+
+        val videoUrl = episode.url
+
+        val movieMetadata = MediaMetadata(MediaMetadata.MEDIA_TYPE_MOVIE)
+        movieMetadata.putString(MediaMetadata.KEY_TITLE, episode.name)
+        movieMetadata.putInt(KEY_EPISODE_ID, episode.id)
+        //movieMetadata.addImage(WebImage(Uri.parse("https://github.com/mkaflowski/HybridMediaPlayer/blob/master/images/cover.jpg?raw=true")))
+
+        val mediaInfo = MediaInfo.Builder(videoUrl)
+            .setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
+            .setContentType(MimeTypes.VIDEO_UNKNOWN)
+            .setMetadata(movieMetadata).build()
+
+        //array of media sources
+        val mediaItems =
+            arrayOf(MediaQueueItem.Builder(mediaInfo).build())
+
+        viewModel.loadCastMedia(mediaItems)
     }
 
     override fun onResume() {

@@ -1,7 +1,10 @@
-package cat.xarxacatala.xarxacatalapp.di
+package cat.xarxacatala.xarxacatalapp.di.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import cat.xarxacatala.xarxacatalapp.cast.CastViewModel
+import cat.xarxacatala.xarxacatalapp.di.ViewModelFactory
+import cat.xarxacatala.xarxacatalapp.di.ViewModelKey
 import cat.xarxacatala.xarxacatalapp.showDetail.ShowDetailViewModel
 import cat.xarxacatala.xarxacatalapp.shows.ShowsViewModel
 import cat.xarxacatala.xarxacatalapp.videoPlayer.VideoPlayerViewModel
@@ -25,6 +28,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(VideoPlayerViewModel::class)
     abstract fun bindVideoPlayerViewModel(viewModel: VideoPlayerViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CastViewModel::class)
+    abstract fun bindCastViewModel(viewModel: CastViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

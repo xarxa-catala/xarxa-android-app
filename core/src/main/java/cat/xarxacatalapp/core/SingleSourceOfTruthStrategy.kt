@@ -27,7 +27,7 @@ fun <T, A> resultLiveData(
             val responseStatus = networkCall.invoke()
             saveCallResult(responseStatus)
         } catch (ex: Exception) {
-            emit(CallResult.error(ex.message!!))
+            emit(CallResult.error(ex.message.toString()))
             emitSource(source)
         }
     }
