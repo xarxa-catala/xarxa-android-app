@@ -9,7 +9,9 @@ import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import cat.xarxacatala.xarxacatalapp.BaseFragment
 import cat.xarxacatala.xarxacatalapp.R
@@ -21,6 +23,7 @@ import cat.xarxacatalapp.core.models.Episode
 import cat.xarxacatalapp.core.models.Playlist
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.content_show_detail.*
 import kotlinx.android.synthetic.main.fragment_show_detail.*
 import javax.inject.Inject
 
@@ -60,6 +63,8 @@ class ShowDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //(activity as MainActivity).fullScreen()
+
         context?.let { context ->
             episodesAdapter = EpisodesListAdapter(context)
             rvEpisodes.layoutManager = LinearLayoutManager(requireContext())
@@ -67,6 +72,9 @@ class ShowDetailFragment : BaseFragment() {
         }
 
         subscribeUi()
+
+        val navHostFragment = NavHostFragment.findNavController(this);
+        NavigationUI.setupWithNavController(toolbar_layout, toolbar, navHostFragment)
     }
 
     private fun subscribeUi() {

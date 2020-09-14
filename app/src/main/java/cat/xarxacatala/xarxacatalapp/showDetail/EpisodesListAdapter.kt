@@ -1,11 +1,10 @@
 package cat.xarxacatala.xarxacatalapp.showDetail
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cat.xarxacatala.xarxacatalapp.R
 import cat.xarxacatalapp.core.models.Episode
 import com.bumptech.glide.request.RequestOptions
+import kotlinx.android.synthetic.main.adapter_episodes.view.*
 
 
 class EpisodesListAdapter(val context: Context) :
@@ -27,12 +27,15 @@ class EpisodesListAdapter(val context: Context) :
     }
 
     override fun onBindViewHolder(holder: EpisodeViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position + 1)
     }
 
     inner class EpisodeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(episode: Episode) {
-            itemView.findViewById<TextView>(R.id.tvEpisodeName).text = episode.name
+        @SuppressLint("SetTextI18n")
+        fun bind(episode: Episode, position: Int) {
+
+            itemView.tvEpisodeName.text = episode.name
+            itemView.tvEpisodeNum.text = position.toString()
 
             val requestOptions = RequestOptions()
             requestOptions.isMemoryCacheable

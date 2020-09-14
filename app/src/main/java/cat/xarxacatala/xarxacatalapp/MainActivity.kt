@@ -25,13 +25,15 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.*
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import cat.xarxacatala.xarxacatalapp.cast.CastManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -41,7 +43,6 @@ import javax.inject.Inject
  * An activity that inflates a layout that has a [BottomNavigationView].
  */
 class MainActivity : AppCompatActivity() {
-    private lateinit var appBarConfiguration: AppBarConfiguration
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -56,20 +57,11 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_container) as NavHostFragment? ?: return
 
         // Set up Action Bar
         val navController = host.navController
-
-        appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.home, R.id.watching, R.id.downloads)
-        )
-
-        setupActionBar(navController, appBarConfiguration)
 
         setupBottomNavMenu(navController)
 
@@ -93,7 +85,6 @@ class MainActivity : AppCompatActivity() {
                 showSystemUI()
 
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                toolbar.visibility = VISIBLE
                 bottomNav.visibility = VISIBLE
             }
 
@@ -128,7 +119,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun fullScreen() {
-        toolbar.visibility = GONE
         bottomNav.visibility = GONE
 
         hideSystemUI()
@@ -162,11 +152,5 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return item.onNavDestinationSelected(findNavController(R.id.nav_host_container))
                 || super.onOptionsItemSelected(item)
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        // Allows NavigationUI to support proper up navigation or the drawer layout
-        // drawer menu, depending on the situation
-        return findNavController(R.id.nav_host_container).navigateUp(appBarConfiguration)
     }
 }
