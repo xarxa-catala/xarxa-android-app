@@ -4,11 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
@@ -35,13 +35,13 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation "com.squareup.retrofit2:retrofit:2.7.0"
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'androidx.core:core-ktx:1.5.0'
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.7.0"
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.6.1"
 
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha02"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0-alpha01"
 
     //TODO: create project with common dependencies between the modules and move dagger there
     def dagger_version = "2.27"
