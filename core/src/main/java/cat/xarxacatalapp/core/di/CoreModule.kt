@@ -55,7 +55,7 @@ class CoreModule {
         return Retrofit.Builder()
             .baseUrl("https://gestio.multimedia.xarxacatala.cat/")
             .addConverterFactory(GsonConverterFactory.create())
-          //  .client(okHttpClient)
+            .client(okHttpClient)
             .build()
             .create(XarxaCatalaService::class.java)
     }
