@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/XarxaCatalApp.iml" filepath="$PROJECT_DIR$/.idea/modules/XarxaCatalApp.iml" group="XarxaCatalApp" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="XarxaCatalApp/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core.iml" group="XarxaCatalApp/core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/XarxaCatalApp.iml" filepath="$PROJECT_DIR$/.idea/modules/XarxaCatalApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/XarxaCatalApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/XarxaCatalApp.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/XarxaCatalApp.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/XarxaCatalApp.core.iml" />
     </modules>
   </component>
 </project>

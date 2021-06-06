@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import cat.xarxacatalapp.core.models.Show
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ShowDao {
@@ -16,8 +17,8 @@ interface ShowDao {
     fun insertAll(shows: List<Show>)
 
     @Query("SELECT * FROM Show")
-    fun loadAllShows(): LiveData<List<Show>>
+    fun loadAllShows(): Flow<List<Show>>
 
     @Query("SELECT * FROM Show WHERE id = :showId")
-    fun loadShow(showId: Int): LiveData<Show>
+    fun loadShow(showId: Int): Flow<Show>
 }

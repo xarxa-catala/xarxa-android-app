@@ -5,13 +5,13 @@ import android.os.Handler
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import cat.xarxacatalapp.core.di.scopes.AppScope
 import cat.xarxacatalapp.core.extensions.default
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ext.cast.CastPlayer
 import com.google.android.exoplayer2.ext.cast.SessionAvailabilityListener
 import com.google.android.gms.cast.MediaQueueItem
 import com.google.android.gms.cast.framework.CastContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 
@@ -19,9 +19,8 @@ const val KEY_EPISODE_ID = "cat.xaracatala.xatacatalapp.EPISODE_ID"
 /**
  * Class used to manage CastPlayer state. This wraps the required data around liveData to observe easily changes from the UI
  */
-@AppScope
 class CastManager @Inject constructor(
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val castContext: CastContext
 ) {
     val castPlayerLiveData = MutableLiveData<CastPlayer?>()

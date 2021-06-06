@@ -1,41 +1,31 @@
 package cat.xarxacatala.xarxacatalapp.showDetail
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import cat.xarxacatala.xarxacatalapp.BaseFragment
 import cat.xarxacatala.xarxacatalapp.R
-import cat.xarxacatala.xarxacatalapp.XarxaCatApp
-import cat.xarxacatala.xarxacatalapp.di.injectViewModel
 import cat.xarxacatala.xarxacatalapp.utils.setToolbarTitle
 import cat.xarxacatalapp.core.CallResult
 import cat.xarxacatalapp.core.models.Episode
 import cat.xarxacatalapp.core.models.Playlist
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.content_show_detail.*
 import kotlinx.android.synthetic.main.fragment_show_detail.*
-import javax.inject.Inject
 
-
-/**
- * A simple [Fragment] subclass.
- */
+@AndroidEntryPoint
 class ShowDetailFragment : BaseFragment() {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: ShowDetailViewModel
+    private val viewModel: ShowDetailViewModel by viewModels()
 
     private var epsObserver: Observer<CallResult<List<Episode>>>? = null
 
@@ -43,18 +33,12 @@ class ShowDetailFragment : BaseFragment() {
 
     private lateinit var episodesAdapter: EpisodesListAdapter
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
 
-        (activity?.application as XarxaCatApp).appComponent.inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        viewModel = injectViewModel(viewModelFactory)
         viewModel.showId = args.showId
 
         return inflater.inflate(R.layout.fragment_show_detail, container, false)
@@ -73,7 +57,7 @@ class ShowDetailFragment : BaseFragment() {
 
         subscribeUi()
 
-        val navHostFragment = NavHostFragment.findNavController(this);
+        val navHostFragment = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar_layout, toolbar, navHostFragment)
     }
 

@@ -1,10 +1,9 @@
 package cat.xarxacatala.xarxacatalapp.cast
 
-import androidx.lifecycle.ViewModel
-import cat.xarxacatalapp.core.di.scopes.AppScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-@AppScope
+@HiltViewModel
 class CastViewModel @Inject constructor(
     castManager: CastManager
 ) : CastBaseViewModel(castManager) {

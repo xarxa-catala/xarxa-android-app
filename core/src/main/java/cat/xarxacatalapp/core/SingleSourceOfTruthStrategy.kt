@@ -3,7 +3,8 @@ package cat.xarxacatalapp.core
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.map
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 
 /**
  * The database serves as the single source of truth.
@@ -13,21 +14,28 @@ import kotlinx.coroutines.Dispatchers
  * [CallResult.Status.ERROR] - if error has occurred from any source
  * [CallResult.Status.LOADING]
  */
-fun <T, A> resultLiveData(
-    databaseQuery: () -> LiveData<T>,
+@ExperimentalCoroutinesApi
+fun <T, A> resultFlow(
+    databaseQuery: () -> Flow<T>,
     networkCall: suspend () -> A,
     saveCallResult: suspend (A) -> Unit
-): LiveData<CallResult<T>> =
-    liveData(Dispatchers.IO) {
-        emit(CallResult.loading())
+): Flow<CallResult<T>> = flow {
         val source = databaseQuery.invoke().map { CallResult.success(it) }
-        emitSource(source)
-
-        try {
-            val responseStatus = networkCall.invoke()
-            saveCallResult(responseStatus)
-        } catch (ex: Exception) {
-            emit(CallResult.error(ex.message.toString()))
-            emitSource(source)
+        source.onStart {
+            emit(CallResult.loading())
         }
+
+        withContext(Dispatchers.IO) {
+            async {
+                try {
+                    val responseStatus = networkCall.invoke()
+                    saveCallResult(responseStatus)
+                } catch (ex: Exception) {
+                    ex.printStackTrace()
+//                    emit(CallResult.error(ex.message.toString(), null))
+                }
+            }
+        }
+
+        emitAll(source)
     }

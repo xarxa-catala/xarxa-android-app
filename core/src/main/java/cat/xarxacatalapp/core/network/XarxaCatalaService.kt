@@ -2,9 +2,12 @@ package cat.xarxacatalapp.core.network
 
 
 import cat.xarxacatalapp.core.models.*
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Streaming
+import retrofit2.http.Url
 
 
 const val URL_BASE = "api/v1"
@@ -29,5 +32,7 @@ interface XarxaCatalaService {
         @Path("playlistId") playlistId: Int
     ): Response<List<Episode>>
 
-
+    @GET
+    @Streaming
+    suspend fun episodeDownload(@Url episodeUrl: String): Response<ResponseBody>
 }

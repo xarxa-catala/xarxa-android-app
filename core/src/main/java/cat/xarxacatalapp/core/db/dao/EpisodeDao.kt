@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import cat.xarxacatalapp.core.models.Episode
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EpisodeDao {
@@ -18,8 +19,8 @@ interface EpisodeDao {
 
     //FIXME: Once the API implements  it, this should filter by PlaylistId
     @Query("SELECT * FROM episode WHERE showId = :showId AND playlistId = :playlistId")
-    fun loadEpisodes(showId: Int, playlistId: Int): LiveData<List<Episode>>
+    fun loadEpisodes(showId: Int, playlistId: Int): Flow<List<Episode>>
 
     @Query("SELECT * FROM episode WHERE id = :episodeId")
-    fun loadEpisode(episodeId: Int): LiveData<Episode>
+    fun loadEpisode(episodeId: Int): Flow<Episode>
 }

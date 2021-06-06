@@ -36,24 +36,20 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import cat.xarxacatala.xarxacatalapp.cast.CastManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 /**
  * An activity that inflates a layout that has a [BottomNavigationView].
  */
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
     @Inject
     lateinit var castManager: CastManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        (application as XarxaCatApp).appComponent.inject(this)
 
         setContentView(R.layout.activity_main)
 

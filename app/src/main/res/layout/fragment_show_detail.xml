@@ -21,13 +21,6 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
-            <!--            <androidx.appcompat.widget.Toolbar-->
-            <!--                android:id="@+id/toolbar"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="?attr/actionBarSize"-->
-            <!--                app:layout_collapseMode="pin" />-->
-
-
             <ImageView
                 android:id="@+id/ivShowThumbnail"
                 android:layout_width="match_parent"

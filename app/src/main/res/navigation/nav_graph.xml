@@ -79,7 +79,6 @@
         tools:layout="@layout/fragment_show_detail">
         <argument
             android:name="showId"
-            android:defaultValue="0"
             app:argType="integer" />
         <action
             android:id="@+id/action_showDetailFragment_to_videoPlayerFragment"

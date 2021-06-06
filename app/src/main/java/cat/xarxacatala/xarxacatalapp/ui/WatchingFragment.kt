@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import cat.xarxacatala.xarxacatalapp.BaseFragment
 import cat.xarxacatala.xarxacatalapp.R
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A simple [Fragment] subclass.
  */
+@AndroidEntryPoint
 class WatchingFragment : BaseFragment() {
 
     override fun onCreateView(

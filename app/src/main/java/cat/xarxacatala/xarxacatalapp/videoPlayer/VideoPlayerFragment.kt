@@ -7,18 +7,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import cat.xarxacatala.xarxacatalapp.BaseFragment
 import cat.xarxacatala.xarxacatalapp.MainActivity
 import cat.xarxacatala.xarxacatalapp.R
-import cat.xarxacatala.xarxacatalapp.XarxaCatApp
 import cat.xarxacatala.xarxacatalapp.cast.KEY_EPISODE_ID
-import cat.xarxacatala.xarxacatalapp.di.injectViewModel
 import cat.xarxacatalapp.core.CallResult
 import cat.xarxacatalapp.core.models.Episode
+import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
@@ -33,31 +32,22 @@ import com.google.android.gms.cast.MediaMetadata
 import com.google.android.gms.cast.MediaQueueItem
 import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.exo_playback_control_view.*
 import kotlinx.android.synthetic.main.fragment_video_player.*
-import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class VideoPlayerFragment : BaseFragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: VideoPlayerViewModel
+    private val viewModel: VideoPlayerViewModel by viewModels()
     private lateinit var player: SimpleExoPlayer
 
     val args: VideoPlayerFragmentArgs by navArgs()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        (activity?.application as XarxaCatApp).appComponent.inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = injectViewModel(viewModelFactory)
         viewModel.episodeId = args.episodeId
 
         // Inflate the layout for this fragment
@@ -71,18 +61,18 @@ class VideoPlayerFragment : BaseFragment() {
             setupPlayer(it)
         }
 
-        viewModel.castState.observe(viewLifecycleOwner, Observer { state ->
+        viewModel.castState.observe(viewLifecycleOwner) { state ->
             if (state == CastState.NO_DEVICES_AVAILABLE)
                 btnCast?.visibility = View.GONE
             else {
                 if (btnCast?.visibility == View.GONE)
                     btnCast?.visibility = View.VISIBLE
             }
-        })
+        }
 
-        CastButtonFactory.setUpMediaRouteButton(requireContext(), btnCast);
+        CastButtonFactory.setUpMediaRouteButton(requireContext(), btnCast)
 
-        btnCast.setRemoteIndicatorDrawable(resources.getDrawable(R.drawable.ic_cast))
+        btnCast?.setRemoteIndicatorDrawable(resources.getDrawable(R.drawable.ic_cast))
     }
 
     private fun setupPlayer(context: Context) {
@@ -122,7 +112,7 @@ class VideoPlayerFragment : BaseFragment() {
 
     private fun loadEpisode(episode: Episode) {
         val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(
-            context,
+            requireContext(),
             Util.getUserAgent(requireContext(), "XarxaCatalaApp")
         )
 
@@ -135,14 +125,12 @@ class VideoPlayerFragment : BaseFragment() {
         // This is the MediaSource representing the media to be played.
 
         val videoSource = ProgressiveMediaSource.Factory(dataSourceFactory)
-            .createMediaSource(Uri.parse(url))
+            .createMediaSource(MediaItem.fromUri(Uri.parse(url)))
 
         // Prepare the player with the source.
-        videoSource?.let {
-            player.prepare(it, false, true)
-            player.playWhenReady = true
-        }
-
+        player.setMediaSource(videoSource, false)
+        player.prepare()
+        player.playWhenReady = true
 
         val videoUrl = episode.url
 
